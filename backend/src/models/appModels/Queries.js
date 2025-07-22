@@ -1,17 +1,29 @@
 const mongoose = require('mongoose');
 
 const queriesSchema = new mongoose.Schema({
-  removed: {
-    type: Boolean,
-    default: false,
-  },
   createdBy: {
     type: mongoose.Schema.ObjectId,
     ref: 'Client',
     required: true,
     autopopulate: true,
   },
-  message: { type: String, required: true },
+  description: { type: String, required: true },
+  resolution: { type: String, required: false },
+  status: {
+    type: String,
+    enum: ['open', 'in progress', 'closed'],
+    default: 'draft',
+    required: true,
+  },
+  notes: [
+    {
+      id: { type: String, required: false },
+      note: {
+        type: String,
+        required: false,
+      },
+    },
+  ],
   date: { type: Date, require: true },
   updated: { type: Date, default: Date.now },
   created: { type: Date, default: Date.now },

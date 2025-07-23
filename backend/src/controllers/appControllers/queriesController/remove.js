@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Model = mongoose.model('Queries');
-const QueriesNotes = mongoose.model('QueriesNotes');
 
 const remove = async (req, res) => {
   const deletedNote = await Model.findOneAndUpdate(
@@ -23,10 +22,10 @@ const remove = async (req, res) => {
       message: 'Invoice not found',
     });
   }
-  const paymentsInvoices = await QueriesNotes.updateMany(
-    { notes: deletedNote._id },
-    { $set: { removed: true } }
-  );
+  // const paymentsInvoices = await QueriesNotes.updateMany(
+  //   { notes: deletedNote._id },
+  //   { $set: { removed: true } }
+  // );
   return res.status(200).json({
     success: true,
     result: deletedNote,

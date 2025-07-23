@@ -1,7 +1,7 @@
-const search = require('../../../controllers/appControllers/clientController/search');
-const {migrate} = require('../../../controllers/appControllers/clientController/migrate');
+const search = require('../controllers/appControllers/clientController/search');
+const { migrate } = require('../controllers/appControllers/clientController/migrate');
 
-jest.mock('../../../controllers/appControllers/clientController/migrate.js');
+jest.mock('../controllers/appControllers/clientController/migrate.js');
 
 describe('search function', () => {
   let mockFind;
@@ -15,7 +15,11 @@ describe('search function', () => {
     mockWhere = jest.fn();
     mockLimit = jest.fn();
     mockExec = jest.fn();
-    mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn().mockReturnThis(),end: jest.fn() };
+    mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+      end: jest.fn(),
+    };
 
     migrate.mockImplementation((x) => x); // Assuming migrate is a simple pass-through for this test
 

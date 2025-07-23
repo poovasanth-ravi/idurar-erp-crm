@@ -1,12 +1,10 @@
-const paginatedList = require('../../../controllers/appControllers/clientController/paginatedList')
-const {migrate} = require('../../../controllers/appControllers/clientController/migrate.js')
+const paginatedList = require('../controllers/appControllers/clientController/paginatedList');
+const { migrate } = require('../controllers/appControllers/clientController/migrate.js');
 
-
-jest.mock('../../../controllers/appControllers/clientController/migrate.js');
-
+jest.mock('../controllers/appControllers/clientController/migrate.js');
 
 describe('paginatedList function', () => {
-    let mockFind;
+  let mockFind;
   let mockCountDocuments;
   let mockSkip;
   let mockLimit;
@@ -15,8 +13,7 @@ describe('paginatedList function', () => {
   let mockExec;
   let mockRes;
 
-
-  beforeEach(()=> {
+  beforeEach(() => {
     mockFind = jest.fn();
     mockCountDocuments = jest.fn();
     mockSkip = jest.fn();
@@ -24,26 +21,23 @@ describe('paginatedList function', () => {
     mockSort = jest.fn();
     mockPopulate = jest.fn();
     mockExec = jest.fn();
-    mockRes = {status: jest.fn().mockReturnThis(), json: jest.fn()};
-
+    mockRes = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
     migrate.mockImplementation((x) => x);
 
     // Mocking Model methods
     const Model = {
-        find: mockFind.mockReturnThis(),
-        countDocuments: mockCountDocuments,
-        skip: mockSkip.mockReturnThis(),
-        limit: mockLimit.mockReturnThis(),
-        sort: mockSort.mockReturnThis(),
-        populate: mockPopulate.mockReturnThis(),
-        exec: mockExec,
-      };
+      find: mockFind.mockReturnThis(),
+      countDocuments: mockCountDocuments,
+      skip: mockSkip.mockReturnThis(),
+      limit: mockLimit.mockReturnThis(),
+      sort: mockSort.mockReturnThis(),
+      populate: mockPopulate.mockReturnThis(),
+      exec: mockExec,
+    };
 
-
-      global.Model = Model;
-  })
-
+    global.Model = Model;
+  });
 
   it('should return a non-empty list with pagination', async () => {
     const mockData = [{ _id: '1', data: 'sample' }];
@@ -88,8 +82,5 @@ describe('paginatedList function', () => {
     const req = { query: { page: '1', items: '10' } };
 
     await expect(paginatedList(Model, req, mockRes)).rejects.toThrow('Database Error');
-
   });
-
-
-})
+});
